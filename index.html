@@ -81,28 +81,18 @@
   }
 
   .logo {
-    text-decoration: none;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .logo-name {
     font-family: var(--serif);
     font-weight: 400;
     font-size: 19px;
     letter-spacing: 0.005em;
     color: var(--paper);
-    line-height: 1;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
   }
-  .logo-studio {
-    font-family: var(--sans);
-    font-size: 9px;
-    font-weight: 400;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--muted);
-    line-height: 1;
-  }
+  .logo-italic { font-style: italic; }
+  .logo-mark { color: var(--accent); font-style: italic; font-size: 16px; transform: translateY(-2px); display: inline-block; }
 
   .nav-right { display: flex; align-items: center; gap: 36px; }
 
@@ -740,8 +730,7 @@
 ════════════════════════════════════════════════════════════ -->
 <nav id="nav" class="scrolled">
   <a href="#top" class="logo" aria-label="Ben Forman home">
-    <span class="logo-name" data-editable="">Ben Forman</span>
-    <span class="logo-studio" data-editable="">Ongoing Theory</span>
+    <span class="logo-italic">Ben</span><span class="logo-italic">Forman</span><span class="logo-mark">·</span>
   </a>
   <div class="nav-right">
     <a href="#work" class="nav-link muted">The Work</a>
@@ -944,7 +933,12 @@
 </footer>
 
 <!-- Edit toolbar -->
-
+<div id="edit-toolbar">
+  <span class="tb-label">Page Editor</span>
+  <span class="tb-sep"></span>
+  <button id="btn-edit" onclick="toggleEdit()">Edit Mode</button>
+  <button id="btn-save" onclick="savePage()" style="display:none">Save &amp; Download</button>
+</div>
 
 <script>
   /* ── Nav scroll ───────────────────────────────────────────── */
