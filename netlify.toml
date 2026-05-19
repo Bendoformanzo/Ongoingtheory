@@ -1,0 +1,13 @@
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/canvas"
+  to = "/canvas/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/canvas/*"
+  to = "/canvas/index.html"
+  status = 200
