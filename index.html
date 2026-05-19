@@ -2,16 +2,8 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: Page title (browser tab)
-     Change inside <title>...</title> below.
-═══════════════════════════════════════════════════════════════ -->
-<title>Ongoing Theory</title>
-
-<!-- EDIT: Search description (shows in Google results) -->
-<meta name="description" content="A consultancy at the intersection of brand, technology, and culture. Strategy approached as an ongoing theory, sharpened in the world.">
-
+<title>Ben Forman · Ongoing Theory</title>
+<meta name="description" content="Creative strategy embedded in the growth thesis. Ben Forman works with founders and senior decision-makers to close the gap between what a business is worth and what the world believes about it.">
 <meta name="theme-color" content="#0A0908">
 <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;rect width='32' height='32' fill='%230A0908'/&gt;&lt;circle cx='16' cy='16' r='5' fill='%236B8E6E'/&gt;&lt;/svg&gt;">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,20 +11,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
 
 <style>
-  /* ════════════════════════════════════════════════════════════
-     COLOR & TYPE TOKENS
-     Adjust the values below to retune the whole site at once.
-  ═══════════════════════════════════════════════════════════════ */
   :root {
-    --bg: #0A0908;                          /* page background — near-black, warm */
-    --paper: #EAE7DC;                       /* primary text — warm off-white */
-    --paper-soft: rgba(234, 231, 220, 0.72);/* muted paper for body copy */
-    --muted: #6E6A60;                       /* small UI text */
-    --line: rgba(234, 231, 220, 0.10);      /* hairline rules */
+    --bg: #0A0908;
+    --paper: #EAE7DC;
+    --paper-soft: rgba(234, 231, 220, 0.72);
+    --muted: #6E6A60;
+    --line: rgba(234, 231, 220, 0.10);
     --line-strong: rgba(234, 231, 220, 0.22);
-    --accent: #6B8E6E;                      /* dark premium green — section markers, italics */
-    --accent-bright: #88AB8B;               /* hover state */
-
+    --accent: #6B8E6E;
+    --accent-bright: #88AB8B;
     --serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
     --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
   }
@@ -53,7 +40,6 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
-  /* film grain — gives the surface a paper-like texture */
   body::before {
     content: '';
     position: fixed;
@@ -65,7 +51,6 @@
     mix-blend-mode: overlay;
   }
 
-  /* soft vignette */
   body::after {
     content: '';
     position: fixed;
@@ -96,18 +81,28 @@
   }
 
   .logo {
+    text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .logo-name {
     font-family: var(--serif);
     font-weight: 400;
     font-size: 19px;
     letter-spacing: 0.005em;
     color: var(--paper);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 7px;
+    line-height: 1;
   }
-  .logo .ot-italic { font-style: italic; }
-  .logo .ot-mark { color: var(--accent); font-style: italic; font-size: 16px; transform: translateY(-2px); }
+  .logo-studio {
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1;
+  }
 
   .nav-right { display: flex; align-items: center; gap: 36px; }
 
@@ -136,6 +131,26 @@
   }
   .nav-link:hover { color: var(--paper); }
   .nav-link:hover::after { transform: scaleX(1); }
+
+  .nav-canvas {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    border-radius: 100px;
+    padding: 6px 14px;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-canvas:hover {
+    color: var(--bg);
+    background: var(--accent-bright);
+    border-color: var(--accent-bright);
+  }
 
   /* ── Hero ───────────────────────────────────────────────── */
   .hero {
@@ -188,6 +203,31 @@
     color: var(--paper-soft);
     opacity: 0;
     animation: fadeUp 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) 0.7s forwards;
+  }
+
+  .hero-proof {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.95s forwards;
+    flex-wrap: wrap;
+  }
+  .hero-proof-item {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .hero-proof-sep {
+    color: var(--accent);
+    margin: 0 14px;
+    opacity: 0.6;
+    font-size: 10px;
   }
 
   .hero-foot {
@@ -267,7 +307,7 @@
   }
   .section-title em { font-style: italic; }
 
-  /* ── Thesis & Background body ───────────────────────────── */
+  /* ── Thesis / Offer body ────────────────────────────────── */
   .thesis-body {
     display: grid;
     grid-template-columns: 200px 1fr;
@@ -296,58 +336,7 @@
   .thesis-text p + p { margin-top: 1.3em; }
   .thesis-text em { font-style: italic; color: var(--accent); }
 
-  /* ── Pillars ────────────────────────────────────────────── */
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    margin-top: 24px;
-    max-width: 1500px;
-  }
-  .pillar {
-    border-top: 1px solid var(--line-strong);
-    padding: 40px 36px 0 0;
-    position: relative;
-  }
-  .pillar:not(:last-child) { margin-right: 36px; border-right: 1px solid var(--line); }
-
-  .pillar-num {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--accent);
-    margin-bottom: 28px;
-    letter-spacing: 0.12em;
-  }
-  .pillar-title {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(28px, 2.6vw, 40px);
-    line-height: 1.04;
-    margin-bottom: 24px;
-    letter-spacing: -0.012em;
-  }
-  .pillar-lede {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 1.45;
-    color: var(--accent);
-    margin-bottom: 24px;
-    max-width: 340px;
-  }
-  .pillar-body {
-    font-family: var(--sans);
-    font-size: 14.5px;
-    font-weight: 400;
-    line-height: 1.7;
-    color: var(--paper-soft);
-    max-width: 380px;
-  }
-
-  /* ── Engagement ─────────────────────────────────────────── */
+  /* ── Engagement rows ────────────────────────────────────── */
   .engagement-list { border-top: 1px solid var(--line-strong); max-width: 1500px; }
 
   .engagement-row {
@@ -394,7 +383,7 @@
     align-self: center;
   }
 
-  /* ── Background & Endnotes ──────────────────────────────── */
+  /* ── Background ─────────────────────────────────────────── */
   .background-text {
     font-family: var(--serif);
     font-weight: 400;
@@ -408,7 +397,6 @@
     margin-top: 80px;
     padding-top: 32px;
     border-top: 1px solid var(--line);
-    max-width: 960px;
   }
   .endnotes-label {
     font-family: var(--sans);
@@ -422,12 +410,118 @@
   .endnotes-list {
     font-family: var(--sans);
     font-size: 12.5px;
-    line-height: 2.1;
+    line-height: 1.9;
     color: var(--paper-soft);
     letter-spacing: 0.04em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 6px;
+    width: 100%;
   }
   .endnotes-list span { white-space: nowrap; }
   .endnotes-list .dot { color: var(--accent); margin: 0 14px; opacity: 0.7; }
+
+  /* ── Career Canvas section ──────────────────────────────── */
+  .canvas-section {
+    padding: 160px 48px;
+    border-top: 1px solid var(--line);
+    position: relative;
+    z-index: 2;
+  }
+
+  .canvas-inner {
+    max-width: 1500px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .canvas-left {
+    padding-top: 14px;
+  }
+
+  .canvas-marker {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .canvas-marker::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .canvas-tag {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .canvas-right {
+    border-left: 1px solid var(--line-strong);
+    padding-left: 80px;
+  }
+
+  .canvas-headline {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 58px);
+    line-height: 1.04;
+    letter-spacing: -0.018em;
+    margin-bottom: 32px;
+  }
+  .canvas-headline em { font-style: italic; color: var(--accent); }
+
+  .canvas-body {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--paper-soft);
+    max-width: 580px;
+    margin-bottom: 48px;
+  }
+  .canvas-body p + p { margin-top: 1em; }
+
+  .canvas-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    border-radius: 100px;
+    padding: 12px 24px;
+    transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  }
+  .canvas-cta:hover {
+    color: var(--bg);
+    background: var(--accent-bright);
+    border-color: var(--accent-bright);
+  }
+  .canvas-cta .arrow {
+    font-size: 0.9em;
+    transition: transform 0.3s ease;
+  }
+  .canvas-cta:hover .arrow { transform: translateX(4px); }
 
   /* ── Contact ────────────────────────────────────────────── */
   .contact-section {
@@ -521,11 +615,80 @@
   .reveal.delay-2 { transition-delay: 0.24s; }
   .reveal.delay-3 { transition-delay: 0.36s; }
 
+  /* ── Edit toolbar ───────────────────────────────────────── */
+  #edit-toolbar {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(10, 9, 8, 0.92);
+    border: 1px solid var(--line-strong);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  #edit-toolbar .tb-label {
+    color: var(--muted);
+  }
+  #edit-toolbar .tb-status {
+    color: var(--accent-bright);
+    font-weight: 500;
+  }
+  #edit-toolbar button {
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  #edit-toolbar button:hover {
+    background: var(--paper);
+    color: var(--bg);
+    border-color: var(--paper);
+  }
+  #edit-toolbar button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+  #edit-toolbar .tb-sep {
+    width: 1px;
+    height: 14px;
+    background: var(--line-strong);
+  }
+  /* Editable field highlight */
+  [data-editable][contenteditable="true"] {
+    outline: 1px dashed rgba(107, 142, 110, 0.5);
+    outline-offset: 4px;
+    border-radius: 2px;
+    cursor: text;
+  }
+  [data-editable][contenteditable="true"]:focus {
+    outline: 1px solid var(--accent);
+    outline-offset: 4px;
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
-    .pillars { grid-template-columns: 1fr; }
-    .pillar:not(:last-child) { margin-right: 0; border-right: none; }
-    .pillar { padding: 40px 0 36px 0; }
+    .canvas-inner { grid-template-columns: 1fr; gap: 48px; }
+    .canvas-right { border-left: none; padding-left: 0; border-top: 1px solid var(--line-strong); padding-top: 48px; }
     .engagement-row { grid-template-columns: 60px 1fr; gap: 24px; row-gap: 16px; }
     .engagement-row p { grid-column: 2; max-width: 100%; }
     .engagement-row .tag { grid-column: 2; text-align: left; }
@@ -534,9 +697,12 @@
     nav { padding: 20px 24px; }
     .hero { padding: 140px 24px 110px; }
     .hero-foot { left: 24px; right: 24px; bottom: 32px; }
+    .hero-foot { font-size: 9px; letter-spacing: 0.22em; gap: 12px; }
+    .hero-foot .scroll-cue::after { width: 22px; }
     .nav-right { gap: 20px; }
     .nav-link.muted { display: none; }
     section.editorial { padding: 100px 24px; }
+    .canvas-section { padding: 100px 24px; }
     .contact-section { padding: 130px 24px 110px; }
     .section-head, .thesis-body {
       grid-template-columns: 1fr;
@@ -545,223 +711,243 @@
     }
     .section-marker { padding-top: 0; }
     .endnotes { margin-top: 56px; }
-    footer { padding: 40px 24px 32px; }
+    .endnotes-list {
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 10px;
+      line-height: 1.5;
+    }
+    .endnotes-list span { white-space: normal; }
+    .endnotes-list .dot { display: none; }
+    footer {
+      padding: 40px 24px 32px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
   }
 </style>
 
-<!-- ════════════════════════════════════════════════════════════
-     EDIT-MODE STYLES — removed on Download
-═══════════════════════════════════════════════════════════════ -->
-
 </head>
-<body class="">
+<body>
 
-<!-- ════════════════════════════════════════════════════════════
-     EDIT TOOLBAR — removed on Download
-═══════════════════════════════════════════════════════════════ -->
-
-
-<!-- Settings modal -->
-
-
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: Navigation
-     The menu fixed at the top. Logo on left, links on right.
-═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — NAVIGATION
+     • logo-name: your name
+     • logo-studio: your studio / practice name
+     • nav-link hrefs: match the id="" on each section below
+     • nav-canvas: the side product link — update href if path changes
+════════════════════════════════════════════════════════════ -->
 <nav id="nav" class="scrolled">
-  <a href="#top" class="logo" aria-label="Ongoing Theory home">
-    <span>Ongoing</span><span class="ot-italic">Theory</span><span class="ot-mark">·</span>
+  <a href="#top" class="logo" aria-label="Ben Forman home">
+    <span class="logo-name" data-editable="">Ben Forman</span>
+    <span class="logo-studio" data-editable="">Ongoing Theory</span>
   </a>
   <div class="nav-right">
-    <a href="#practice" class="nav-link muted">Practice</a>
-    <a href="#engagement" class="nav-link muted">Engagement</a>
+    <a href="#work" class="nav-link muted">The Work</a>
+    <a href="#thinking" class="nav-link muted">The Thinking</a>
     <a href="#contact" class="nav-link">Contact</a>
+    <a href="https://www.ongoingtheory.com/canvas" class="nav-canvas">Career Canvas</a>
   </div>
 </nav>
 
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: Hero
-     The opening manifesto sentence. Italics use <em>...</em>.
-═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — HERO
+     • hero-meta-text: one-line descriptor (name · role · location)
+     • h1: the main headline — keep it short and problem-focused
+     • hero-sub: 2–3 sentence pitch — who you work with, what you do,
+       and the key differentiator
+     • hero-proof-item: add/remove credential spans as needed;
+       each needs a matching hero-proof-sep · between items
+     • hero-foot left span: location
+════════════════════════════════════════════════════════════ -->
 <header class="hero" id="top">
   <div class="hero-meta">
     <span class="hero-meta-line"></span>
-    <span class="hero-meta-text">A Modern Business Consultancy. Established 2025.</span>
+    <span class="hero-meta-text" data-editable="">Ben Forman · Brand &amp; Growth Architect</span>
   </div>
-  <h1>Human thinking, amplified by ai.&nbsp;</h1>
-  <p class="hero-sub">
-    A modern business consultancy at the intersection of brand, technology, and culture. Built for businesses exploring the&nbsp;frontier, teams willing to re-write the playbook, and the leaders ready to put in the work it takes to succeed. Building the future, the human way.</p>
+  <h1 data-editable="">Story, brand and community are the biggest growth levers in your business right now.</h1>
+  <p class="hero-sub" data-editable="">I work with founders and senior decision-makers to leverage brand and story for growth. Strategic, systematised and always creative.</p>
+  <div class="hero-proof">
+    <!-- Add or remove credential items below. Each needs a · separator after it except the last. -->
+    <span class="hero-proof-item" data-editable="">Senior brand strategist</span>
+    <span class="hero-proof-sep">·</span>
+    <span class="hero-proof-item" data-editable="">founder</span>
+    <span class="hero-proof-sep">·</span>
+    <span class="hero-proof-item" data-editable="">investor</span>
+    <span class="hero-proof-sep">·</span>
+    <span class="hero-proof-item" data-editable="">advisor</span>
+    <span class="hero-proof-sep">·</span>
+    <span class="hero-proof-item" data-editable="">creative</span>
+  </div>
   <div class="hero-foot">
-    <span>Auckland · Worldwide</span>
+    <span>Auckland · New Zealand</span>
     <span class="scroll-cue">Read on</span>
   </div>
 </header>
 
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: I — The Thesis
-     The argument for why this exists.
-═══════════════════════════════════════════════════════════════ -->
-<section class="editorial" id="thesis">
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — I · THE WORK
+     • section-title: the bold positioning statement
+     • thesis-text paragraphs: your offer in plain language —
+       what the work is, what makes it rare, how it gets done
+     • engagement-row items: each row is one way of working together
+       — update h3 (name), p (description), .tag (duration/format)
+       — add or remove rows as your model evolves
+════════════════════════════════════════════════════════════ -->
+<section class="editorial" id="work">
   <div class="section-head">
-    <div class="section-marker reveal"><span>I</span><span>The Thesis</span></div>
-    <h2 class="section-title reveal delay-1">
-      The world moves faster than the playbooks. What remains is an<em> ongoing theory.</em> Sharpened against the world.&nbsp;</h2>
+    <div class="section-marker reveal visible"><span>I</span><span>The Work</span></div>
+    <h2 class="section-title reveal delay-1 visible" data-editable="">Creative strategy <em>embedded</em> in the growth thesis. Creative strategy doing heavy lifting.</h2>
+  </div>
+
+  <div class="thesis-body" style="margin-bottom: 88px;">
+    <div class="thesis-label reveal visible">The Offer</div>
+    <div class="thesis-text reveal delay-1 visible">
+      <p data-editable="">Most organisations don't understand the power of brand and story. We underinvest and undervalue the leverage it creates. Smart brand implemented at the strategic layer of a business is the heart of your growth engine. It builds a business that scales and endures.</p>
+      <p data-editable="">My combination of skills are rare - I worked with some of the worlds top brands creatively while building and running some of NZ's most interesting businesses commercially. That means I can sit in the room where business decisions get made, diagnose the problem, and return with a creative strategy that's <em>structurally built into the growth thesis</em>. Not a campaign. Not a rebrand for rebrand's sake. A story that works as hard as the product does, with a plan on how to implement it.</p>
+      <p data-editable="">This is the work I do - Brand and story as a core business driver.</p>
+    </div>
+  </div>
+
+  <div class="engagement-list">
+    <div class="engagement-row reveal visible">
+      <span class="num">i.</span>
+      <h3 data-editable="">Fractional</h3>
+      <p data-editable="">Embedded as Head of Brand, CMO, or creative strategic counsel. For founders and leadership teams who need senior creative thinking sitting at the table — someone who has absorbed the business, not arrived from the sidelines with a deck.</p>
+      <span class="tag" data-editable="">3 to 12 Months</span>
+    </div>
+
+    <div class="engagement-row reveal visible">
+      <span class="num">ii.</span>
+      <h3 data-editable="">Project</h3>
+      <p data-editable="">Brand launches. Repositions. GTM narratives for fundraising or new markets. AI integration strategy. Defined scope, senior delivery, executed with the right partners assembled around the work.</p>
+      <span class="tag" data-editable="">Defined Scope</span>
+    </div>
+
+    <div class="engagement-row reveal visible">
+      <span class="num">iii.</span>
+      <h3 data-editable="">Advisor &amp; Speaker</h3>
+      <p data-editable="">For the moments that call for an outside perspective. Board seats, ongoing advisory, keynotes, and immersive leadership retreats. Strategic counsel in whatever form fits — a quarterly call, a year-long retainer, a morning in front of your executive team.</p>
+      <span class="tag" data-editable="">Ongoing</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — II · THE THINKING
+     ⚠ DO NOT EDIT the thesis-text paragraphs below.
+       This is the Ongoing Theory essay — published as written.
+     • You may update the section-title (the pull-quote above
+       the essay) if your framing shifts over time.
+════════════════════════════════════════════════════════════ -->
+<section class="editorial" id="thinking">
+  <div class="section-head">
+    <div class="section-marker reveal visible"><span>II</span><span>The Thinking</span></div>
+    <h2 class="section-title reveal delay-1 visible">As technology accelerates beyond our ability to absorb it, and world-class tools become available to everyone, competitive advantage shifts back to what only humans can bring. Story. Culture. Taste.</h2>
   </div>
   <div class="thesis-body">
-    <div class="thesis-label reveal">An Ongoing Theory</div>
-    <div class="thesis-text reveal delay-1">
-      <p>The theory is simple. As technology accelerates beyond our ability to absorb it, and world-class tools become available to everyone, competitive advantage shifts back to what only humans can bring. Story. Culture. Taste.</p>
-      <p>What worked yesterday no longer builds the next chapter. To use the technology now in everyone's hands, we have to think creatively about where it earns its place in the work, and where it does not.</p>
-      <p>The fundamentals of being human do not move at the speed of the tools. We are still driven by story. We still belong to the cultures we trust. We still need discernment to know what is worth our attention.</p>
-      <p>The work, then, lives at the intersection. Where story carries a culture through the change technology demands. Where audiences are moved by what they are told rather than interrupted by it. Where leaders build conviction without the comfort of certainty.</p>
-      <p><em>This is what Ongoing Theory is for.</em></p>
+    <div class="thesis-label reveal visible">An Ongoing Theory</div>
+    <div class="thesis-text reveal delay-1 visible">
+      <p>Out entire world is built on story, it's quite possibly the most interesting facet of human existence. I'm sure even cavemen had certain swag that others were envious of. However for most of human existence knowledge has controlled power, so what happens when knowledge is not only accessible, but deployable? We reach a tipping point, and what was competitive advantage only yesterday is now obsolete. When anyone can do what you're doing what separates you? The story you tell. The brand you create. The Culture you cultivate. As strange as it may seem, we're going back to basics.</p>
+      <p>So what do we create? Where do we focus this superpower? What worked yesterday no longer builds the next chapter. To use the technology now in everyone's hands, we have to think creatively about where it earns its place in the work, and where it does not. We need to be <i>decisive </i>and<i> intentional</i>. Solving precise problems in precise ways.</p>
+      <p>The good news is that being a human hasn't changed. We are still driven by the same emotional levers that we always have been. From cave swag to Patagonia, it's the same chemistry set driving our behaviour.&nbsp;</p>
+      <p>The work, then, lives at the intersection. Using creativity to build brands that people trust and believe in. Telling stories that connect in deeply human ways. Evolving with technology and allowing it to unlock unseen potential as it emerges. Building cultures that sustain community, engagement, trust, loyalty and all of the good things that see your business grow from an idea into the fabric of our society.&nbsp;&nbsp;</p>
+      <p>That's all well and good and I'll get the exec team and the CEO nodding, but who is actually willing to take this up? Who is brave enough to truly throw out the rule book and venture bravely into the complete unknown? Who is willing to fail spectacularly in the pursuit of creating something entirely new? Who wants to contribute to culture rather than simply consuming it. You can use AI as a jetpack to your own human creativity, or you can let it absorb you into&nbsp;a regurgitated mediocrity. Who will be the bold ones?</p><div><em><br></em></div><div><em>That's the Ongoing Theory.</em></div><p></p>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: II — The Practice
-     Three pillars: Creative, Technology, Culture.
-═══════════════════════════════════════════════════════════════ -->
-<section class="editorial" id="practice">
-  <div class="section-head">
-    <div class="section-marker reveal"><span>II</span><span>The Practice</span></div>
-    <h2 class="section-title reveal delay-1">
-      Three lenses. <em>One practice.</em> The work moves between them.
-    </h2>
-  </div>
-  <div class="pillars">
-
-    <article class="pillar reveal">
-      <div class="pillar-num">01</div>
-      <h3 class="pillar-title">Creative</h3>
-      <p class="pillar-lede">Brand, story, and the work that earns belief.</p>
-      <p class="pillar-body">Brand and story are the multiplier on every other investment a business makes. Engaged across the full arc, from strategic foundation through to creative execution. Positioning, narrative, and brand architecture for the businesses redrawing what they stand for.&nbsp; Campaign concepts and creative direction for the launches, repositions, and moments that have to land. Drawn from fifteen years of work that has shifted markets, elections, and how countries see themselves.</p>
-    </article>
-
-    <article class="pillar reveal delay-1">
-      <div class="pillar-num">02</div>
-      <h3 class="pillar-title">Technology</h3>
-      <p class="pillar-lede">AI as the infrastructure layer beneath the business.</p>
-      <p class="pillar-body">
-        The companies that will define the next decade are rebuilding their core systems around AI now. This is the work of doing it with judgment. Where it earns its place, where it doesn't, and how to embed it without losing the texture of the brand or the trust of the team. From strategy through implementation. It's time to move. Drawn from a career of innovation in film, VR/AR, Drones, WEB3 and Ai.</p>
-    </article>
-
-    <article class="pillar reveal delay-2">
-      <div class="pillar-num">03</div>
-      <h3 class="pillar-title">Culture</h3>
-      <p class="pillar-lede">Performance as a function of alignment.</p>
-      <p class="pillar-body">
-        High performance is what happens when what a team believes, how it operates, and the people inside it are pointed in the same direction. Frameworks for organizations and individuals to operate at the level the work demands. Drawn from years of facilitating the rooms where leaders go to think clearly. Drawn from building a truly exceptional decade long business culture and a community of leaders across New Zealand.</p>
-    </article>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: III — The Engagement
-     Five ways to work together.
-═══════════════════════════════════════════════════════════════ -->
-<section class="editorial" id="engagement">
-  <div class="section-head">
-    <div class="section-marker reveal"><span>III</span><span>The Engagement</span></div>
-    <h2 class="section-title reveal delay-1">
-      Five ways in. <em>Each begins with a conversation.</em>
-    </h2>
-  </div>
-  <div class="engagement-list">
-
-    <div class="engagement-row reveal">
-      <span class="num">i.</span>
-      <h3>Fractional Leadership</h3>
-      <p>Embedded as Head of Brand, CMO, or strategic counsel. For the moments when a business needs senior execution sitting at the table, not advice arriving from the sidelines.&nbsp;</p>
-      <span class="tag">3 to 12 Months</span>
-    </div>
-
-    <div class="engagement-row reveal">
-      <span class="num">ii.</span>
-      <h3>Advisory &amp; Boards</h3>
-      <p>Boards, founders, and leadership teams. From single-question counsel through to ongoing seats at the strategic table. Quarterly cadence, retained engagements, or board roles.</p>
-      <span class="tag">Ongoing</span>
-    </div>
-
-    <div class="engagement-row reveal">
-      <span class="num">iii.</span>
-      <h3>Project Engagements</h3>
-      <p>Brand launches. Repositions. Campaigns. AI integration roadmaps and pilots. Defined scope, senior delivery, executed with the right partners assembled around the work.</p>
-      <span class="tag">Defined Scope</span>
-    </div>
-
-    <div class="engagement-row reveal">
-      <span class="num">iv.</span>
-      <h3>Hourly Counsel</h3>
-      <p>Booked by the hour, drawn against your needs. For founders mid-decision, leadership teams running launches, and agencies that want a sharper mind in the room for a specific question.&nbsp;</p>
-      <span class="tag">Per Hour</span>
-    </div>
-
-    <div class="engagement-row reveal">
-      <span class="num">v.</span>
-      <h3>Speaking &amp; Facilitation</h3>
-      <p>Keynotes, executive offsites, and immersive retreats. The work of aligning teams to perform, drawn from a framework refined through five years of CEO gatherings and high-performance practice.</p>
-      <span class="tag">By Invitation</span>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: IV — The Background
-     Credentials and selected work.
-═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — III · THE BACKGROUND
+     • section-title: the overarching credential statement
+     • thesis-text paragraphs: bio in plain language —
+       keep it factual, third-person reads well here
+     • endnotes-list: the notable mentions strip —
+       add/remove <span> items; each needs a
+       <span class="dot">·</span> separator after it except the last
+════════════════════════════════════════════════════════════ -->
 <section class="editorial" id="background">
   <div class="section-head">
-    <div class="section-marker reveal"><span>IV</span><span>The Background</span></div>
-    <h2 class="section-title reveal delay-1">
-      Fifteen years across <em>creative agencies, startups, boards,</em> and the rooms where decisions are made.
+    <div class="section-marker reveal visible"><span>III</span><span>The Background</span></div>
+    <h2 class="section-title reveal delay-1 visible" data-editable="">
+      Fifteen years across <em>creative agencies, startups, boards,</em> and the conversations where decisions get made.
     </h2>
   </div>
   <div class="thesis-body">
-    <div class="thesis-label reveal">Background</div>
-    <div class="thesis-text reveal delay-1">
-      <p>
-        Founder of a Wrestler, a leading creative agency sold in 2025. Pioneer work across film, drones, virtual reality, wellness and Web3, with backing from Blackbird, Icehouse, and the former COO of Disney along the way.
-      </p>
-      <p>Contributed to brands now part of the global vocabulary, including <em>Allbirds</em>, <em>Halter</em>, <em>Niantic</em>, <em>Hyatt Hotels, Education NZ</em>, and the <em>New Zealand Police</em>. Have run Election campaigns, advised start-ups and invested in some too.&nbsp;</p>
+    <div class="thesis-label reveal visible">Background</div>
+    <div class="thesis-text reveal delay-1 visible">
+      <p data-editable="">Founder of Wrestler, a leading creative agency sold in 2025. Pioneering work across film, drones, virtual reality, wellness and Web3, with backing from Blackbird, Icehouse, and the former COO of Disney along the way.</p>
+      <p data-editable="">Contributed to brands now part of the global vocabulary, including <em>Allbirds</em>, <em>Halter</em>, <em>Niantic</em>, <em>Hyatt Hotels</em>, <em>Education NZ</em>, and the <em>New Zealand Police</em>. Have run election campaigns, advised startups and invested in them too.</p>
     </div>
   </div>
 
-  <!-- EDIT: Endnotes — accolades shown as a single quiet line -->
-  <div class="endnotes reveal">
+  <div class="endnotes reveal visible">
     <div class="endnotes-label">Notable Mentions</div>
     <div class="endnotes-list">
-      <span>Forbes 30 Under 30</span><span class="dot">·</span><span>Deloitte Fast 50 &amp; Fast 500 Asia Pacific</span><span class="dot">·</span><span>Board Member, TVNZ</span><span class="dot">·</span><span>Advisor, Growth NZ</span><span class="dot">·</span><span>Exited, Wrestler</span><span class="dot">·</span><span>Host, The Gathering</span>
+      <span data-editable="">Forbes 30 Under 30</span><span class="dot">·</span><span data-editable="">Deloitte Fast 50 &amp; Fast 500 Asia Pacific</span><span class="dot">·</span><span data-editable="">Board Member, TVNZ</span><span class="dot">·</span><span data-editable="">Advisor, Growth NZ</span><span class="dot">·</span><span data-editable="">BEST Awards, Finalist</span><span class="dot">·</span><span data-editable="">Host, The Gathering</span>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════
-     EDIT: Contact
-     The closing CTA. Email in href and visible text below.
-═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — IV · CAREER CANVAS (side offering)
+     • canvas-headline: product tagline
+     • canvas-body paragraphs: what it is and why it matters —
+       keep it tight, this is a side offering not the main pitch
+     • canvas-cta href: update if the path to the tool changes
+════════════════════════════════════════════════════════════ -->
+<div class="canvas-section" id="canvas-tool">
+  <div class="canvas-inner">
+    <div class="canvas-left reveal visible">
+      <div class="canvas-marker"><span>IV</span><span>Career Canvas</span></div>
+      <div class="canvas-tag">A tool we built</div>
+    </div>
+    <div class="canvas-right reveal delay-1 visible">
+      <h2 class="canvas-headline" data-editable="">Know exactly what <em>you're</em> worth.</h2>
+      <div class="canvas-body">
+        <p data-editable="">Career Canvas is a free tool built for individuals — not businesses. In under twenty minutes, it runs a rigorous AI-driven assessment of your unique professional value: the rare combination of skills that makes you genuinely hard to replace, where your time is going versus where it should be, and what your personal brand should actually say.</p>
+        <p data-editable="">Built like a consulting engagement. Delivered as a report you can act on immediately.&nbsp;</p>
+      </div>
+      <a href="https://www.ongoingtheory.com/canvas" class="canvas-cta">
+        Try Career Canvas <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — V · CONTACT
+     • contact-headline: closing statement — should feel like
+       an invitation, not a sales line
+     • contact-link-large href: update the mailto address and
+       subject line as needed
+     • contact-link-text: the visible email address
+════════════════════════════════════════════════════════════ -->
 <section class="contact-section" id="contact">
   <div class="contact-eyebrow">V · In Closing</div>
-  <h2 class="contact-headline reveal">
-    The work begins with a <em>conversation</em>. If your business is building what comes next, there is something here for you.
-  </h2>
-  <a href="mailto:ben@ongoingtheory.com?subject=Ongoing%20Theory" class="contact-link-large reveal delay-1">
-    <span class="contact-link-text">ben@ongoingtheory.com</span>
+  <h2 class="contact-headline reveal visible" data-editable="">The right fit matters. Let's have a conversation about whether we will work well together.&nbsp;</h2>
+  <a href="mailto:ben@ongoingtheory.com?subject=Let%27s%20Talk" class="contact-link-large reveal delay-1 visible">
+    <span class="contact-link-text" data-editable="">ben@ongoingtheory.com</span>
     <span class="arrow">→</span>
   </a>
 </section>
 
-<!-- EDIT: Footer -->
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT — FOOTER
+     • footer-mark: your name and studio name
+     • update the year in the copyright line as needed
+════════════════════════════════════════════════════════════ -->
 <footer>
-  <span class="footer-mark">Ongoing Theory · A modern business consultancy</span>
+  <span class="footer-mark" data-editable="">Ben Forman · Ongoing Theory</span>
   <span>© 2026 · All Rights Reserved</span>
 </footer>
 
+<!-- Edit toolbar — only visible when file is open locally or on the live site -->
+
+
 <script>
-  // Nav scroll state
+  /* ── Nav scroll ───────────────────────────────────────────── */
   const nav = document.getElementById('nav');
   const onScroll = () => {
     if (window.scrollY > 24) nav.classList.add('scrolled');
@@ -770,7 +956,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Reveal on scroll
+  /* ── Reveal on scroll ─────────────────────────────────────── */
   const reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
@@ -785,13 +971,64 @@
   } else {
     reveals.forEach((el) => el.classList.add('visible'));
   }
+
+  /* ── Edit mode ────────────────────────────────────────────── */
+  let editing = false;
+
+  function toggleEdit() {
+    editing = !editing;
+    const fields = document.querySelectorAll('[data-editable]');
+    const btnEdit = document.getElementById('btn-edit');
+    const btnSave = document.getElementById('btn-save');
+
+    fields.forEach(el => {
+      el.contentEditable = editing ? 'true' : 'false';
+    });
+
+    if (editing) {
+      btnEdit.textContent = 'Stop Editing';
+      btnEdit.classList.add('active');
+      btnSave.style.display = 'block';
+      // Scroll to top so user starts from the beginning
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      btnEdit.textContent = 'Edit Mode';
+      btnEdit.classList.remove('active');
+      btnSave.style.display = 'none';
+    }
+  }
+
+  /* ── Save & download ──────────────────────────────────────── */
+  function savePage() {
+    // Turn off edit mode first
+    const fields = document.querySelectorAll('[data-editable]');
+    fields.forEach(el => { el.contentEditable = 'false'; });
+    editing = false;
+    document.getElementById('btn-edit').textContent = 'Edit Mode';
+    document.getElementById('btn-edit').classList.remove('active');
+    document.getElementById('btn-save').style.display = 'none';
+
+    // Clone the full document, strip the toolbar from the saved copy
+    const clone = document.documentElement.cloneNode(true);
+    const toolbar = clone.querySelector('#edit-toolbar');
+    if (toolbar) toolbar.remove();
+
+    // Clean contenteditable attrs from clone
+    clone.querySelectorAll('[contenteditable]').forEach(el => {
+      el.removeAttribute('contenteditable');
+    });
+
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }
 </script>
-
-<!-- ════════════════════════════════════════════════════════════
-     EDIT-MODE SCRIPT — removed on Download
-═══════════════════════════════════════════════════════════════ -->
-
-
 
 
 </body></html>
