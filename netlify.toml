@@ -1,3 +1,5 @@
+# ── Add this to your existing netlify.toml (or create it if you don't have one) ──
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
