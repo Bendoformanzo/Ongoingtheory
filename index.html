@@ -374,15 +374,6 @@
   }
 
   /* ── Background ─────────────────────────────────────────── */
-  .background-text {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(20px, 1.95vw, 30px);
-    line-height: 1.45;
-    max-width: 960px;
-  }
-  .background-text em { font-style: italic; color: var(--accent); }
-
   .endnotes {
     margin-top: 80px;
     padding-top: 32px;
@@ -428,9 +419,7 @@
     align-items: start;
   }
 
-  .canvas-left {
-    padding-top: 14px;
-  }
+  .canvas-left { padding-top: 14px; }
 
   .canvas-marker {
     font-family: var(--serif);
@@ -445,11 +434,7 @@
     gap: 16px;
     margin-bottom: 32px;
   }
-  .canvas-marker::before {
-    content: '';
-    width: 24px; height: 1px;
-    background: var(--accent);
-  }
+  .canvas-marker::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
 
   .canvas-tag {
     font-family: var(--sans);
@@ -502,15 +487,8 @@
     padding: 12px 24px;
     transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   }
-  .canvas-cta:hover {
-    color: var(--bg);
-    background: var(--accent-bright);
-    border-color: var(--accent-bright);
-  }
-  .canvas-cta .arrow {
-    font-size: 0.9em;
-    transition: transform 0.3s ease;
-  }
+  .canvas-cta:hover { color: var(--bg); background: var(--accent-bright); border-color: var(--accent-bright); }
+  .canvas-cta .arrow { font-size: 0.9em; transition: transform 0.3s ease; }
   .canvas-cta:hover .arrow { transform: translateX(4px); }
 
   /* ── Contact ────────────────────────────────────────────── */
@@ -532,11 +510,7 @@
     align-items: center;
     gap: 16px;
   }
-  .contact-eyebrow::before {
-    content: '';
-    width: 32px; height: 1px;
-    background: var(--accent);
-  }
+  .contact-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
 
   .contact-headline {
     font-family: var(--serif);
@@ -593,7 +567,7 @@
   footer a { color: var(--muted); text-decoration: none; transition: color 0.3s ease; }
   footer a:hover { color: var(--paper); }
 
-  /* reveal on scroll */
+  /* ── Reveal on scroll ───────────────────────────────────── */
   .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -605,77 +579,7 @@
   .reveal.delay-2 { transition-delay: 0.24s; }
   .reveal.delay-3 { transition-delay: 0.36s; }
 
-  /* ── Edit toolbar ───────────────────────────────────────── */
-  #edit-toolbar {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(10, 9, 8, 0.92);
-    border: 1px solid var(--line-strong);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 100px;
-    padding: 10px 20px;
-    font-family: var(--sans);
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  #edit-toolbar .tb-label {
-    color: var(--muted);
-  }
-  #edit-toolbar .tb-status {
-    color: var(--accent-bright);
-    font-weight: 500;
-  }
-  #edit-toolbar button {
-    background: none;
-    border: 1px solid var(--line-strong);
-    border-radius: 100px;
-    color: var(--paper);
-    font-family: var(--sans);
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  }
-  #edit-toolbar button:hover {
-    background: var(--paper);
-    color: var(--bg);
-    border-color: var(--paper);
-  }
-  #edit-toolbar button.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--bg);
-  }
-  #edit-toolbar .tb-sep {
-    width: 1px;
-    height: 14px;
-    background: var(--line-strong);
-  }
-  /* Editable field highlight */
-  [data-editable][contenteditable="true"] {
-    outline: 1px dashed rgba(107, 142, 110, 0.5);
-    outline-offset: 4px;
-    border-radius: 2px;
-    cursor: text;
-  }
-  [data-editable][contenteditable="true"]:focus {
-    outline: 1px solid var(--accent);
-    outline-offset: 4px;
-  }
-
-  /* Responsive */
+  /* ── Responsive ─────────────────────────────────────────── */
   @media (max-width: 1024px) {
     .canvas-inner { grid-template-columns: 1fr; gap: 48px; }
     .canvas-right { border-left: none; padding-left: 0; border-top: 1px solid var(--line-strong); padding-top: 48px; }
@@ -686,48 +590,26 @@
   @media (max-width: 720px) {
     nav { padding: 20px 24px; }
     .hero { padding: 140px 24px 110px; }
-    .hero-foot { left: 24px; right: 24px; bottom: 32px; }
-    .hero-foot { font-size: 9px; letter-spacing: 0.22em; gap: 12px; }
+    .hero-foot { left: 24px; right: 24px; bottom: 32px; font-size: 9px; letter-spacing: 0.22em; gap: 12px; }
     .hero-foot .scroll-cue::after { width: 22px; }
     .nav-right { gap: 20px; }
     .nav-link.muted { display: none; }
     section.editorial { padding: 100px 24px; }
     .canvas-section { padding: 100px 24px; }
     .contact-section { padding: 130px 24px 110px; }
-    .section-head, .thesis-body {
-      grid-template-columns: 1fr;
-      gap: 28px;
-      margin-bottom: 56px;
-    }
+    .section-head, .thesis-body { grid-template-columns: 1fr; gap: 28px; margin-bottom: 56px; }
     .section-marker { padding-top: 0; }
     .endnotes { margin-top: 56px; }
-    .endnotes-list {
-      flex-direction: column;
-      align-items: flex-start;
-      row-gap: 10px;
-      line-height: 1.5;
-    }
+    .endnotes-list { flex-direction: column; align-items: flex-start; row-gap: 10px; line-height: 1.5; }
     .endnotes-list span { white-space: normal; }
     .endnotes-list .dot { display: none; }
-    footer {
-      padding: 40px 24px 32px;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-    }
+    footer { padding: 40px 24px 32px; flex-direction: column; align-items: flex-start; gap: 14px; }
   }
 </style>
 
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — NAVIGATION
-     • logo-name: your name
-     • logo-studio: your studio / practice name
-     • nav-link hrefs: match the id="" on each section below
-     • nav-canvas: the side product link — update href if path changes
-════════════════════════════════════════════════════════════ -->
 <nav id="nav" class="scrolled">
   <a href="#top" class="logo" aria-label="Ben Forman home">
     <span class="logo-italic">Ben</span><span class="logo-italic">Forman</span><span class="logo-mark">·</span>
@@ -740,34 +622,23 @@
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — HERO
-     • hero-meta-text: one-line descriptor (name · role · location)
-     • h1: the main headline — keep it short and problem-focused
-     • hero-sub: 2–3 sentence pitch — who you work with, what you do,
-       and the key differentiator
-     • hero-proof-item: add/remove credential spans as needed;
-       each needs a matching hero-proof-sep · between items
-     • hero-foot left span: location
-════════════════════════════════════════════════════════════ -->
 <header class="hero" id="top">
   <div class="hero-meta">
     <span class="hero-meta-line"></span>
-    <span class="hero-meta-text" data-editable="">Ben Forman · Brand &amp; Growth Architect</span>
+    <span class="hero-meta-text">Ben Forman · Brand &amp; Growth Architect</span>
   </div>
-  <h1 data-editable="">Brand and story are the biggest growth levers in your business right now.</h1>
-  <p class="hero-sub" data-editable="">I work with founders and senior decision-makers to leverage brand and story for growth. Strategic, systematised and creative. Super powered through ai.</p>
+  <h1>Story, brand and community are the biggest growth levers in your business right now.</h1>
+  <p class="hero-sub">I work with founders and senior decision-makers to leverage brand and story for growth. Strategic, systematised and always creative.</p>
   <div class="hero-proof">
-    <!-- Add or remove credential items below. Each needs a · separator after it except the last. -->
-    <span class="hero-proof-item" data-editable="">Senior brand strategist</span>
+    <span class="hero-proof-item">Senior brand strategist</span>
     <span class="hero-proof-sep">·</span>
-    <span class="hero-proof-item" data-editable="">founder</span>
+    <span class="hero-proof-item">founder</span>
     <span class="hero-proof-sep">·</span>
-    <span class="hero-proof-item" data-editable="">investor</span>
+    <span class="hero-proof-item">investor</span>
     <span class="hero-proof-sep">·</span>
-    <span class="hero-proof-item" data-editable="">advisor</span>
+    <span class="hero-proof-item">advisor</span>
     <span class="hero-proof-sep">·</span>
-    <span class="hero-proof-item" data-editable="">creative</span>
+    <span class="hero-proof-item">creative</span>
   </div>
   <div class="hero-foot">
     <span>Auckland · New Zealand</span>
@@ -775,128 +646,97 @@
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — I · THE WORK
-     • section-title: the bold positioning statement
-     • thesis-text paragraphs: your offer in plain language —
-       what the work is, what makes it rare, how it gets done
-     • engagement-row items: each row is one way of working together
-       — update h3 (name), p (description), .tag (duration/format)
-       — add or remove rows as your model evolves
-════════════════════════════════════════════════════════════ -->
 <section class="editorial" id="work">
   <div class="section-head">
-    <div class="section-marker reveal visible"><span>I</span><span>The Work</span></div>
-    <h2 class="section-title reveal delay-1 visible" data-editable="">Creative strategy <em>embedded</em> in the growth thesis. Creative strategy doing heavy lifting.</h2>
+    <div class="section-marker reveal"><span>I</span><span>The Work</span></div>
+    <h2 class="section-title reveal delay-1">Creative strategy <em>embedded</em> in the growth thesis. Creative strategy doing heavy lifting.</h2>
   </div>
 
   <div class="thesis-body" style="margin-bottom: 88px;">
-    <div class="thesis-label reveal visible">The Offer</div>
-    <div class="thesis-text reveal delay-1 visible">
-      <p data-editable="">Most organisations don't understand the power of brand and story. We underinvest and undervalue the leverage it creates. Smart brand implemented at the strategic layer of a business is the heart of your growth engine. It builds a business that scales and endures.</p>
-      <p data-editable="">My combination of skills are rare - I've worked with some of the worlds top brands creatively, while building and running some of NZ's most interesting businesses commercially. That means I can sit in the room where business decisions get made, diagnose the problem, and return with a creative strategy that's <em>structurally built into the growth thesis</em>. Not a campaign. Not a rebrand for rebrand's sake. A story that works as hard as the product does, with a plan on how to implement it.</p>
-      <p data-editable="">This is the work I do - Creating brand and story strategy as a core business driver.</p>
+    <div class="thesis-label reveal">The Offer</div>
+    <div class="thesis-text reveal delay-1">
+      <p>Most organisations don't understand the power of brand and story. We underinvest and undervalue the leverage it creates. Smart brand implemented at the strategic layer of a business is the heart of your growth engine. It builds a business that scales and endures.</p>
+      <p>My combination of skills are rare - I worked with some of the worlds top brands creatively while building and running some of NZ's most interesting businesses commercially. That means I can sit in the room where business decisions get made, diagnose the problem, and return with a creative strategy that's <em>structurally built into the growth thesis</em>. Not a campaign. Not a rebrand for rebrand's sake. A story that works as hard as the product does, with a plan on how to implement it.</p>
+      <p>This is the work I do - Brand and story as a core business driver.</p>
     </div>
   </div>
 
   <div class="engagement-list">
-    <div class="engagement-row reveal visible">
+    <div class="engagement-row reveal">
       <span class="num">i.</span>
-      <h3 data-editable="">Fractional</h3>
-      <p data-editable="">Embedded as Head of Brand, CMO, or creative strategic counsel. For founders and leadership teams who need senior creative thinking sitting at the table — someone who has absorbed the business, not arrived from the sidelines with a deck.</p>
-      <span class="tag" data-editable="">3 to 12 Months</span>
+      <h3>Fractional</h3>
+      <p>Embedded as Head of Brand, CMO, or creative strategic counsel. For founders and leadership teams who need senior creative thinking sitting at the table — someone who has absorbed the business, not arrived from the sidelines with a deck.</p>
+      <span class="tag">3 to 12 Months</span>
     </div>
 
-    <div class="engagement-row reveal visible">
+    <div class="engagement-row reveal">
       <span class="num">ii.</span>
-      <h3 data-editable="">Project</h3>
-      <p data-editable="">Brand launches. Repositions. GTM narratives for fundraising or new markets. AI integration strategy. Defined scope, senior delivery, executed with the right partners assembled around the work.</p>
-      <span class="tag" data-editable="">Defined Scope</span>
+      <h3>Project</h3>
+      <p>Brand launches. Repositions. GTM narratives for fundraising or new markets. AI integration strategy. Defined scope, senior delivery, executed with the right partners assembled around the work.</p>
+      <span class="tag">Defined Scope</span>
     </div>
 
-    <div class="engagement-row reveal visible">
+    <div class="engagement-row reveal">
       <span class="num">iii.</span>
-      <h3 data-editable="">Advisor &amp; Speaker</h3>
-      <p data-editable="">For the moments that call for an outside perspective. Board seats, ongoing advisory, keynotes, and immersive leadership retreats. Strategic counsel in whatever form fits — a quarterly call, a year-long retainer, a morning in front of your executive team.</p>
-      <span class="tag" data-editable="">Ongoing</span>
+      <h3>Advisor &amp; Speaker</h3>
+      <p>For the moments that call for an outside perspective. Board seats, ongoing advisory, keynotes, and immersive leadership retreats. Strategic counsel in whatever form fits — a quarterly call, a year-long retainer, a morning in front of your executive team.</p>
+      <span class="tag">Ongoing</span>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — II · THE THINKING
-     ⚠ DO NOT EDIT the thesis-text paragraphs below.
-       This is the Ongoing Theory essay — published as written.
-     • You may update the section-title (the pull-quote above
-       the essay) if your framing shifts over time.
-════════════════════════════════════════════════════════════ -->
 <section class="editorial" id="thinking">
   <div class="section-head">
-    <div class="section-marker reveal visible"><span>II</span><span>The Thinking</span></div>
-    <h2 class="section-title reveal delay-1 visible">As technology accelerates beyond our ability to absorb it, and world-class tools become available to everyone, competitive advantage shifts back to what only humans can bring. Story. Culture. Taste.</h2>
+    <div class="section-marker reveal"><span>II</span><span>The Thinking</span></div>
+    <h2 class="section-title reveal delay-1">As technology accelerates beyond our ability to absorb it, and world-class tools become available to everyone, competitive advantage shifts back to what only humans can bring. Story. Culture. Taste.</h2>
   </div>
   <div class="thesis-body">
-    <div class="thesis-label reveal visible">An Ongoing Theory</div>
-    <div class="thesis-text reveal delay-1 visible">
+    <div class="thesis-label reveal">An Ongoing Theory</div>
+    <div class="thesis-text reveal delay-1">
       <p>Our entire world is built on story, it's quite possibly the most interesting facet of human existence. I'm sure even cavemen had certain swag that others were envious of. However for most of human existence knowledge has controlled power, so what happens when knowledge is not only accessible, but deployable? We reach a tipping point, and what was competitive advantage only yesterday is now obsolete. When anyone can do what you're doing what separates you? The story you tell. The brand you create. The Culture you cultivate. As strange as it may seem, we're going back to basics.</p>
       <p>So what do we create? Where do we focus this superpower? What worked yesterday no longer builds the next chapter. To use the technology now in everyone's hands, we have to think creatively about where it earns its place in the work, and where it does not. We need to be <i>decisive </i>and<i> intentional</i>. Solving precise problems in precise ways.</p>
       <p>The good news is that being a human hasn't changed. We are still driven by the same emotional levers that we always have been. From cave swag to Patagonia, it's the same chemistry set driving our behaviour.&nbsp;</p>
       <p>The work, then, lives at the intersection. Using creativity to build brands that people trust and believe in. Telling stories that connect in deeply human ways. Evolving with technology and allowing it to unlock unseen potential as it emerges. Building cultures that sustain community, engagement, trust, loyalty and all of the good things that see your business grow from an idea into the fabric of our society.&nbsp;&nbsp;</p>
-      <p>That's all well and good and I'll get the exec team and the CEO nodding, but who is actually willing to take this up? Who is brave enough to truly throw out the rule book and venture bravely into the complete unknown? Who is willing to fail spectacularly in the pursuit of creating something entirely new? Who wants to contribute to culture rather than simply consuming it. You can use AI as a jetpack to your own human creativity, or you can let it absorb you into&nbsp;a regurgitated mediocrity. Who will be the bold ones?</p><div><em><br></em></div><div><em>That's the Ongoing Theory.</em></div><p></p>
+      <p>That's all well and good and I'll get the exec team and the CEO nodding, but who is actually willing to take this up? Who is brave enough to truly throw out the rule book and venture bravely into the complete unknown? Who is willing to fail spectacularly in the pursuit of creating something entirely new? Who wants to contribute to culture rather than simply consuming it. You can use AI as a jetpack to your own human creativity, or you can let it absorb you into&nbsp;a regurgitated mediocrity. Who will be the bold ones?</p>
+      <p><em>That's the Ongoing Theory.</em></p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — III · THE BACKGROUND
-     • section-title: the overarching credential statement
-     • thesis-text paragraphs: bio in plain language —
-       keep it factual, third-person reads well here
-     • endnotes-list: the notable mentions strip —
-       add/remove <span> items; each needs a
-       <span class="dot">·</span> separator after it except the last
-════════════════════════════════════════════════════════════ -->
 <section class="editorial" id="background">
   <div class="section-head">
-    <div class="section-marker reveal visible"><span>III</span><span>The Background</span></div>
-    <h2 class="section-title reveal delay-1 visible" data-editable="">
-      A career across <em>creative agencies, startups, boards,</em> and the conversations where decisions get made.
+    <div class="section-marker reveal"><span>III</span><span>The Background</span></div>
+    <h2 class="section-title reveal delay-1">
+      Fifteen years across <em>creative agencies, startups, boards,</em> and the conversations where decisions get made.
     </h2>
   </div>
   <div class="thesis-body">
-    <div class="thesis-label reveal visible">Background</div>
-    <div class="thesis-text reveal delay-1 visible">
-      <p data-editable="">Founder of Wrestler, a leading creative agency sold in 2025. Pioneering work across film, drones, virtual reality, wellness and Web3, with backing from Blackbird, Icehouse, and the former COO of Disney along the way.</p>
-      <p data-editable="">Contributed to brands now part of the global vocabulary, including <em>Allbirds</em>, <em>Halter</em>, <em>Niantic</em>, <em>Hyatt Hotels</em>, <em>Education NZ</em>, and the <em>New Zealand Police</em>. Have run election campaigns, advised startups and invested in them too.</p>
+    <div class="thesis-label reveal">Background</div>
+    <div class="thesis-text reveal delay-1">
+      <p>Founder of Wrestler, a leading creative agency sold in 2025. Pioneering work across film, drones, virtual reality, wellness and Web3, with backing from Blackbird, Icehouse, and the former COO of Disney along the way.</p>
+      <p>Contributed to brands now part of the global vocabulary, including <em>Allbirds</em>, <em>Halter</em>, <em>Niantic</em>, <em>Hyatt Hotels</em>, <em>Education NZ</em>, and the <em>New Zealand Police</em>. Have run election campaigns, advised startups and invested in them too.</p>
     </div>
   </div>
 
-  <div class="endnotes reveal visible">
+  <div class="endnotes reveal">
     <div class="endnotes-label">Notable Mentions</div>
     <div class="endnotes-list">
-      <span data-editable="">Forbes 30 Under 30</span><span class="dot">·</span><span data-editable="">Deloitte Fast 50 &amp; Fast 500 Asia Pacific</span><span class="dot">·</span><span data-editable="">Board Member, TVNZ</span><span class="dot">·</span><span data-editable="">Advisor, Growth NZ</span><span class="dot">·</span><span data-editable="">BEST Awards, Finalist</span><span class="dot">·</span><span data-editable="">Host, The Gathering</span>
+      <span>Forbes 30 Under 30</span><span class="dot">·</span><span>Deloitte Fast 50 &amp; Fast 500 Asia Pacific</span><span class="dot">·</span><span>Board Member, TVNZ</span><span class="dot">·</span><span>Advisor, Growth NZ</span><span class="dot">·</span><span>BEST Awards, Finalist</span><span class="dot">·</span><span>Host, The Gathering</span>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — IV · CAREER CANVAS (side offering)
-     • canvas-headline: product tagline
-     • canvas-body paragraphs: what it is and why it matters —
-       keep it tight, this is a side offering not the main pitch
-     • canvas-cta href: update if the path to the tool changes
-════════════════════════════════════════════════════════════ -->
 <div class="canvas-section" id="canvas-tool">
   <div class="canvas-inner">
-    <div class="canvas-left reveal visible">
+    <div class="canvas-left reveal">
       <div class="canvas-marker"><span>IV</span><span>Career Canvas</span></div>
       <div class="canvas-tag">A tool we built</div>
     </div>
-    <div class="canvas-right reveal delay-1 visible">
-      <h2 class="canvas-headline" data-editable="">Know exactly what <em>you're</em> worth.</h2>
+    <div class="canvas-right reveal delay-1">
+      <h2 class="canvas-headline">Know exactly what <em>you're</em> worth.</h2>
       <div class="canvas-body">
-        <p data-editable="">Career Canvas is a free tool built for individuals — not businesses. In under twenty minutes, it runs a rigorous AI-driven assessment of your unique professional value: the rare combination of skills that makes you genuinely hard to replace, where your time is going versus where it should be, and what your personal brand should actually say.</p>
-        <p data-editable="">Built like a consulting engagement. Delivered as a report you can act on immediately. Helping you build your personal brand and tell your story.</p>
+        <p>Career Canvas is a free tool built for individuals — not businesses. In under twenty minutes, it runs a rigorous AI-driven assessment of your unique professional value: the rare combination of skills that makes you genuinely hard to replace, where your time is going versus where it should be, and what your personal brand should actually say.</p>
+        <p>Built like a consulting engagement. Delivered as a report you can act on immediately.</p>
       </div>
       <a href="https://www.ongoingtheory.com/canvas" class="canvas-cta">
         Try Career Canvas <span class="arrow">→</span>
@@ -905,43 +745,21 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — V · CONTACT
-     • contact-headline: closing statement — should feel like
-       an invitation, not a sales line
-     • contact-link-large href: update the mailto address and
-       subject line as needed
-     • contact-link-text: the visible email address
-════════════════════════════════════════════════════════════ -->
 <section class="contact-section" id="contact">
   <div class="contact-eyebrow">V · In Closing</div>
-  <h2 class="contact-headline reveal visible" data-editable="">Alignment is key. Let's explore if we're the right fit with a conversation.&nbsp;</h2>
-  <a href="mailto:ben@ongoingtheory.com?subject=Let%27s%20Talk" class="contact-link-large reveal delay-1 visible">
-    <span class="contact-link-text" data-editable="">ben@ongoingtheory.com</span>
+  <h2 class="contact-headline reveal">The right fit matters. Let's have a conversation about whether we will work well together.</h2>
+  <a href="mailto:ben@ongoingtheory.com?subject=Let%27s%20Talk" class="contact-link-large reveal delay-1">
+    <span class="contact-link-text">ben@ongoingtheory.com</span>
     <span class="arrow">→</span>
   </a>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     EDIT — FOOTER
-     • footer-mark: your name and studio name
-     • update the year in the copyright line as needed
-════════════════════════════════════════════════════════════ -->
 <footer>
-  <span class="footer-mark" data-editable="">Ben Forman · Ongoing Theory</span>
+  <span class="footer-mark">Ben Forman · Ongoing Theory</span>
   <span>© 2026 · All Rights Reserved</span>
 </footer>
 
-<!-- Edit toolbar -->
-<div id="edit-toolbar">
-  <span class="tb-label">Page Editor</span>
-  <span class="tb-sep"></span>
-  <button id="btn-edit" onclick="toggleEdit()">Edit Mode</button>
-  <button id="btn-save" onclick="savePage()" style="display:none">Save &amp; Download</button>
-</div>
-
 <script>
-  /* ── Nav scroll ───────────────────────────────────────────── */
   const nav = document.getElementById('nav');
   const onScroll = () => {
     if (window.scrollY > 24) nav.classList.add('scrolled');
@@ -950,7 +768,6 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ── Reveal on scroll ─────────────────────────────────────── */
   const reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
@@ -965,64 +782,6 @@
   } else {
     reveals.forEach((el) => el.classList.add('visible'));
   }
-
-  /* ── Edit mode ────────────────────────────────────────────── */
-  let editing = false;
-
-  function toggleEdit() {
-    editing = !editing;
-    const fields = document.querySelectorAll('[data-editable]');
-    const btnEdit = document.getElementById('btn-edit');
-    const btnSave = document.getElementById('btn-save');
-
-    fields.forEach(el => {
-      el.contentEditable = editing ? 'true' : 'false';
-    });
-
-    if (editing) {
-      btnEdit.textContent = 'Stop Editing';
-      btnEdit.classList.add('active');
-      btnSave.style.display = 'block';
-      // Scroll to top so user starts from the beginning
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      btnEdit.textContent = 'Edit Mode';
-      btnEdit.classList.remove('active');
-      btnSave.style.display = 'none';
-    }
-  }
-
-  /* ── Save & download ──────────────────────────────────────── */
-  function savePage() {
-    // Turn off edit mode first
-    const fields = document.querySelectorAll('[data-editable]');
-    fields.forEach(el => { el.contentEditable = 'false'; });
-    editing = false;
-    document.getElementById('btn-edit').textContent = 'Edit Mode';
-    document.getElementById('btn-edit').classList.remove('active');
-    document.getElementById('btn-save').style.display = 'none';
-
-    // Clone the full document, strip the toolbar from the saved copy
-    const clone = document.documentElement.cloneNode(true);
-    const toolbar = clone.querySelector('#edit-toolbar');
-    if (toolbar) toolbar.remove();
-
-    // Clean contenteditable attrs from clone
-    clone.querySelectorAll('[contenteditable]').forEach(el => {
-      el.removeAttribute('contenteditable');
-    });
-
-    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-    const blob = new Blob([html], { type: 'text/html' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'index.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
-  }
 </script>
-
 
 </body></html>
