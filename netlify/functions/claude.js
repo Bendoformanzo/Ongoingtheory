@@ -1,13 +1,18 @@
 exports.handler = async (event) => {
+  // Only allow POST
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
+
+  // Require a valid Netlify Identity token
   const authHeader = event.headers['authorization'] || '';
   if (!authHeader.startsWith('Bearer ')) {
     return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorised' }) };
   }
+
   try {
     const body = JSON.parse(event.body);
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -17,7 +22,9 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify(body),
     });
+
     const data = await response.json();
+
     return {
       statusCode: response.status,
       headers: { 'Content-Type': 'application/json' },
