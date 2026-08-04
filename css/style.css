@@ -1,0 +1,823 @@
+/* ==========================================================================
+   ONGOING THEORY
+   ========================================================================== */
+
+:root {
+  --ink:        #05070c;
+  --paper:      #f2ede4;
+  --muted:      rgba(242, 237, 228, 0.62);
+  --amber:      #e6ad6d;
+  --amber-soft: #f3cfa0;
+  --hairline:   rgba(242, 237, 228, 0.16);
+
+  /* typed page */
+  /* paper tone — change these three to age or bleach the sheet */
+  --sheet:      #f4ede1;
+  --sheet-mid:  #ebe2d2;
+  --sheet-edge: #e2d8c5;
+  --ink-dark:   #241f19;
+  --ink-mid:    #4a4238;
+  --stamp:      #9c3b2e;
+
+  --grain: 0.42;   /* film grain over the room */
+
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+  --type: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+body { overflow: hidden; }
+
+/* --------------------------------------------------------------------------
+   Stage
+   -------------------------------------------------------------------------- */
+
+.viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  cursor: default;
+  background: #05070c;
+}
+
+.parallax {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 900ms var(--ease);
+}
+.parallax.is-live { transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+.stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width / height set by JS to cover the viewport with overscan */
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: filter 1200ms var(--ease);
+}
+
+/* the twinkle canvas sits exactly on the image and moves with it */
+.twinkle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1800ms ease 400ms;
+}
+.is-ready .twinkle { opacity: 1; }
+
+/* a gentle colour grade over the whole room */
+.grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 45%, rgba(90, 130, 190, 0.10), transparent 60%),
+    linear-gradient(180deg, rgba(4, 7, 14, 0.34) 0%, transparent 28%, transparent 66%, rgba(4, 7, 14, 0.46) 100%);
+  transition: opacity 1200ms var(--ease);
+}
+
+/* Warm pools over each practical light. Different periods and phases so they
+   never pulse in unison — that's what stops it reading as one CSS animation. */
+.glows { position: absolute; inset: 0; pointer-events: none; }
+
+.glow {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1600ms ease 700ms;
+  will-change: opacity, filter;
+}
+.is-ready .glow { opacity: 1; }
+
+/* Brightness is written every frame by driveLamps() in app.js — a CSS
+   animation here would win the cascade and flatten the flicker back into a
+   smooth loop. Position and colour only. */
+.glow--desk {
+  left: 34.5%; top: 49%; width: 20%; height: 24%;
+  background: radial-gradient(closest-side, rgba(255, 198, 126, 0.32), rgba(255, 176, 96, 0.09) 46%, transparent 72%);
+}
+.glow--floor {
+  left: 78.5%; top: 42%; width: 18%; height: 26%;
+  background: radial-gradient(closest-side, rgba(255, 214, 156, 0.42), rgba(255, 186, 112, 0.12) 46%, transparent 72%);
+}
+.glow--corner {
+  left: 97%; top: 42%; width: 15%; height: 24%;
+  background: radial-gradient(closest-side, rgba(255, 210, 150, 0.40), rgba(255, 190, 120, 0.10) 48%, transparent 70%);
+}
+/* the linear fixture washing the wall above the framed portrait */
+.glow--wash {
+  left: 8%; top: 13%; width: 16%; height: 9%;
+  background: radial-gradient(closest-side, rgba(255, 226, 178, 0.24), transparent 70%);
+}
+
+/* lamp easter egg */
+.lights-on .scene { filter: brightness(1.16) saturate(1.06) contrast(0.97); }
+.lights-on .glow  { filter: brightness(1.4); }
+.lights-on .grade { opacity: 0.55; }
+
+/* Film grain, sized in screen pixels rather than image pixels — on a large
+   display the photograph gets scaled up and goes soft, and fixed-size grain is
+   what puts the perceived detail back. Overlay blend leaves the blacks alone
+   and works into the midtones, which is where real grain lives. */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='170' height='170'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='170' height='170' filter='url(%23g)'/></svg>");
+  background-size: 170px 170px;
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 1600ms ease 600ms;
+}
+/* Turn --grain up for more texture, down for less. It needs to be this high
+   because `overlay` deliberately leaves blacks alone, and most of this room is
+   black — at 0.085 it was mathematically present and completely invisible.
+
+   The grain also jumps to a new position eight times a second. Static grain
+   reads as a texture laid over a photograph; grain that moves reads as film,
+   and it is the movement rather than the strength that does the work. */
+.is-ready .grain {
+  opacity: var(--grain);
+  animation: grain-shift 0.72s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%      { background-position:    0px    0px; }
+  12.5%   { background-position:  -37px   14px; }
+  25%     { background-position:   21px  -43px; }
+  37.5%   { background-position:  -53px  -19px; }
+  50%     { background-position:   46px   31px; }
+  62.5%   { background-position:  -14px   52px; }
+  75%     { background-position:   58px  -28px; }
+  87.5%   { background-position:  -31px  -55px; }
+  100%    { background-position:    0px    0px; }
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(140% 105% at 50% 50%, transparent 42%, rgba(3, 5, 10, 0.55) 100%);
+}
+
+/* opening move */
+.parallax { opacity: 0; }
+.is-ready .parallax { opacity: 1; transition: opacity 1400ms var(--ease); }
+.stage { transform: translate(-50%, -50%) scale(1.05); }
+.is-ready .stage {
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 2600ms var(--ease);
+}
+
+/* --------------------------------------------------------------------------
+   Hotspots
+   -------------------------------------------------------------------------- */
+
+.hotspots { position: absolute; inset: 0; }
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+/* the open sheet has to clear every other dot, including ones later in the
+   DOM that would otherwise paint straight through the paper */
+.hotspot.is-open { z-index: 30; }
+
+/* the hit area — a real button, so it is focusable and announced */
+.hotspot__hit {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hotspot__hit:focus { outline: none; }
+.hotspot__hit:focus-visible { outline: none; }
+
+.hotspot__marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 50%;
+  border: 1px solid rgba(242, 237, 228, 0.75);
+  background: rgba(242, 237, 228, 0.10);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 0 0 0 rgba(230, 173, 109, 0.42), 0 2px 14px rgba(0, 0, 0, 0.5);
+  /* --near is written per frame from the pointer distance: the dot only
+     surfaces as you approach it, so at rest the page is just the photograph */
+  opacity: calc(var(--near, 0) * 0.85);
+  transform: scale(calc(0.55 + var(--near, 0) * 0.45));
+  transition:
+    background-color 260ms ease,
+    border-color 260ms ease,
+    box-shadow 420ms ease;
+}
+
+.hotspot__marker::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--amber-soft);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 260ms ease, transform 340ms var(--ease);
+}
+
+/* halo, only once you are near enough to see the dot at all */
+.hotspot__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 50%;
+  border: 1px solid rgba(230, 173, 109, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.is-ready .hotspot__pulse {
+  animation: halo 4.4s ease-out infinite;
+  animation-play-state: paused;
+}
+.is-ready .hotspot.is-near .hotspot__pulse { animation-play-state: running; }
+
+@keyframes halo {
+  0%   { transform: scale(1);   opacity: calc(var(--near, 0) * 0.55); }
+  70%  { transform: scale(3.6); opacity: 0; }
+  100% { transform: scale(3.6); opacity: 0; }
+}
+
+.hotspot:hover  .hotspot__marker,
+.hotspot__hit:focus-visible .hotspot__marker,
+.hotspot.is-open .hotspot__marker {
+  opacity: 1;
+  transform: scale(1.42);
+  border-color: var(--amber-soft);
+  background: rgba(230, 173, 109, 0.22);
+  box-shadow: 0 0 0 6px rgba(230, 173, 109, 0.10), 0 4px 22px rgba(0, 0, 0, 0.6);
+}
+.hotspot:hover .hotspot__marker::after,
+.hotspot__hit:focus-visible .hotspot__marker::after,
+.hotspot.is-open .hotspot__marker::after { opacity: 1; transform: scale(1); }
+
+.hotspot.is-open .hotspot__pulse { animation: none; opacity: 0; }
+
+/* --------------------------------------------------------------------------
+   Cards
+   -------------------------------------------------------------------------- */
+
+/* a sheet of paper wound into a typewriter */
+.card {
+  position: absolute;
+  width: 312px;
+  max-width: 76vw;
+  padding: 24px 26px 22px;
+  text-align: left;
+  font-family: var(--type);
+  color: var(--ink-dark);
+  background:
+    /* grain, then uneven light across the sheet — no ruling, no fake tearing */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.06'/></svg>"),
+    radial-gradient(75% 55% at 16% 8%,  rgba(255, 253, 246, 0.85), transparent 72%),
+    radial-gradient(55% 45% at 90% 96%, rgba(184, 168, 138, 0.32), transparent 74%),
+    radial-gradient(42% 38% at 74% 26%, rgba(206, 190, 160, 0.20), transparent 78%),
+    linear-gradient(174deg, var(--sheet) 0%, var(--sheet-mid) 56%, var(--sheet-edge) 100%);
+  background-blend-mode: multiply, screen, multiply, multiply, normal;
+  border-radius: 1px;
+  box-shadow:
+    0 22px 46px rgba(0, 0, 0, 0.50),
+    0 4px 12px rgba(0, 0, 0, 0.30),
+    0 0 26px rgba(122, 100, 66, 0.16) inset;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) rotate(-0.5deg) scale(0.985);
+  transform-origin: 20% 50%;
+  transition:
+    opacity 260ms ease,
+    transform 480ms var(--ease);
+  z-index: 5;
+}
+.hotspot.is-open .card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) rotate(-0.5deg) scale(1);
+}
+
+
+/* Card placement — always clear of the hit area, so the sheet never covers
+   the thing it is describing. */
+.card[data-align="right"] { left: calc(100% + 20px); }
+.card[data-align="left"]  { right: calc(100% + 20px); }
+.card[data-valign="down"] { top: -14px; }
+.card[data-valign="up"]   { bottom: -14px; }
+
+/* not bold — over-struck. See .ch--over. */
+.card__title {
+  margin: 0 0 11px;
+  font-family: var(--type);
+  font-size: 15.5px;
+  line-height: 1.34;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: var(--ink-dark);
+}
+
+.card__body {
+  margin: 0 0 9px;
+  font-size: 12.5px;
+  line-height: 1.78;
+  color: var(--ink-mid);
+}
+.card__body:last-of-type { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   Struck characters
+
+   Each glyph carries its own --dx / --dy / --rot / --ink, written once by the
+   seeded generator in app.js. Together they undo the thing that makes digital
+   monospace read as digital: perfect baselines and uniform ink.
+   -------------------------------------------------------------------------- */
+
+/* the real sentence, for screen readers and nothing else */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wd { display: inline-block; white-space: nowrap; }
+
+/* A typewriter strikes at one weight. Nothing here changes the stroke — only
+   how much ink reached the paper (--ink) and how far it spread into the fibre
+   (--bleed). More ink bleeds more, which is why the dark letters look softer
+   at the edges rather than fatter. */
+.ch {
+  display: inline-block;
+  position: relative;
+  transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--rot, 0deg));
+  opacity: var(--ink, 1);
+  text-shadow: 0 0 var(--bleed, 0.3px) currentColor;
+  visibility: hidden;
+}
+.ch.is-struck { visibility: visible; }
+
+/* Emphasis on a typewriter is an over-strike: the same character hit twice,
+   barely out of register. Kept tight — enough to darken the heading and give
+   it a little weight, not enough to read as doubled. */
+.ch--over::after {
+  content: attr(data-c);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(0.3px, 0.18px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: -0.14em;
+  background: currentColor;
+  opacity: 0.6;
+  animation: caret 620ms steps(1) infinite;
+}
+@keyframes caret { 0%, 50% { opacity: 0.6; } 50.01%, 100% { opacity: 0; } }
+
+.card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 17px;
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border: 1px solid rgba(36, 31, 25, 0.42);
+  background: rgba(36, 31, 25, 0.04);
+  color: var(--ink-dark);
+  font-family: var(--type);
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 200ms var(--ease);
+}
+.card__cta:hover {
+  background: rgba(36, 31, 25, 0.10);
+  border-color: rgba(36, 31, 25, 0.75);
+  transform: translateY(-1px);
+}
+.card__cta svg { width: 10px; height: 10px; flex: none; }
+
+/* hairline from marker to sheet */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(239, 231, 214, 0.75), transparent);
+  opacity: 0;
+  transition: opacity 300ms ease 120ms;
+}
+.card[data-align="right"]::before { left: -20px; transform: scaleX(-1); }
+.card[data-align="left"]::before  { right: -20px; }
+.hotspot.is-open .card::before { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   Chrome
+   -------------------------------------------------------------------------- */
+
+/* The page carries no wordmark, nav or tagline — just this, and it goes
+   the moment you find anything. */
+.hint {
+  position: absolute;
+  right: 34px;
+  bottom: 28px;
+  z-index: 20;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 228, 0.42);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease 900ms;
+}
+.is-ready .hint { opacity: 1; }
+.is-ready .hint.is-hidden { opacity: 0; transition: opacity 500ms ease; }
+.hint__dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--amber);
+  animation: blip 2.6s ease-in-out infinite;
+}
+@keyframes blip { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* --------------------------------------------------------------------------
+   Pan arrows
+
+   Only appear when the room is wider than the window. They are the signal that
+   there is more room off the sides — without them, on a phone, the page looks
+   like a static crop.
+   -------------------------------------------------------------------------- */
+
+.pan {
+  position: absolute;
+  bottom: 24px;
+  z-index: 25;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(242, 237, 228, 0.20);
+  border-radius: 50%;
+  background: rgba(10, 13, 20, 0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--amber-soft);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  transition: opacity 400ms ease, background-color 220ms ease,
+              border-color 220ms ease, transform 260ms var(--ease);
+}
+.is-pan .pan { display: flex; }
+.is-ready.is-pan .pan { opacity: 0.82; }
+
+.pan svg { width: 21px; height: 21px; }
+.pan--left  { left: 18px; }
+.pan--right { right: 18px; }
+
+/* while a sheet is open the room is held still, so the arrows would do nothing */
+.is-card-open .pan { opacity: 0 !important; pointer-events: none; }
+
+.pan:hover { background: rgba(10, 13, 20, 0.62); border-color: rgba(230, 173, 109, 0.5); }
+.pan:active { transform: scale(0.92); }
+
+/* at the end of the room there is nowhere further to go */
+.is-ready.is-pan .pan[disabled] { opacity: 0.18; cursor: default; }
+.pan[disabled]:active { transform: none; }
+
+/* a slow nudge outward, so it reads as "there is more this way" */
+@keyframes pan-nudge {
+  0%, 82%, 100% { transform: translateX(0); }
+  90%           { transform: translateX(var(--nudge, 3px)); }
+}
+.is-ready.is-pan .pan:not([disabled]) { animation: pan-nudge 4.5s ease-in-out infinite; }
+.pan--left  { --nudge: -3px; }
+.pan--right { --nudge: 3px; }
+
+/* --------------------------------------------------------------------------
+   The reading window
+
+   Same sheet of paper as the cards, just a bigger one, wound further out of
+   the machine.
+   -------------------------------------------------------------------------- */
+
+.reader {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 5vh 20px;
+}
+.reader[hidden] { display: none; }
+
+.reader__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 5, 10, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+.reader.is-open .reader__backdrop { opacity: 1; }
+
+.reader__sheet {
+  position: relative;
+  width: min(620px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 40px 46px 38px;
+  font-family: var(--type);
+  color: var(--ink-dark);
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.06'/></svg>"),
+    radial-gradient(70% 45% at 18% 5%,  rgba(255, 253, 246, 0.85), transparent 72%),
+    radial-gradient(55% 40% at 92% 98%, rgba(184, 168, 138, 0.30), transparent 74%),
+    linear-gradient(176deg, var(--sheet) 0%, var(--sheet-mid) 58%, var(--sheet-edge) 100%);
+  background-blend-mode: multiply, screen, multiply, normal;
+  border-radius: 1px;
+  box-shadow:
+    0 34px 70px rgba(0, 0, 0, 0.6),
+    0 6px 16px rgba(0, 0, 0, 0.34),
+    0 0 30px rgba(122, 100, 66, 0.16) inset;
+  opacity: 0;
+  transform: translateY(18px) rotate(-0.35deg);
+  transition: opacity 340ms ease, transform 520ms var(--ease);
+}
+.reader.is-open .reader__sheet { opacity: 1; transform: translateY(0) rotate(-0.35deg); }
+
+.reader__close {
+  position: absolute;
+  top: 14px; right: 16px;
+  width: 30px; height: 30px;
+  border: 0;
+  background: none;
+  font-family: var(--type);
+  font-size: 24px;
+  line-height: 1;
+  color: rgba(36, 31, 25, 0.5);
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.reader__close:hover { color: var(--ink-dark); }
+
+.reader__title {
+  margin: 0 0 26px;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.reader__body p {
+  margin: 0 0 16px;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+}
+.reader__body p:last-of-type { margin-bottom: 0; }
+
+.reader__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(36, 31, 25, 0.16);
+}
+.reader__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border: 1px solid rgba(36, 31, 25, 0.42);
+  background: rgba(36, 31, 25, 0.04);
+  font-family: var(--type);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dark);
+  text-decoration: none;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+.reader__link svg { width: 10px; height: 10px; }
+.reader__link:hover { background: rgba(36, 31, 25, 0.10); border-color: rgba(36, 31, 25, 0.75); }
+
+/* centred on a phone too, not slid up against the bottom edge */
+@media (max-width: 640px) {
+  .reader { padding: 4vh 14px; place-items: center; }
+  .reader__sheet {
+    width: 100%;
+    max-height: 86vh;
+    padding: 28px 22px 26px;
+    transform: translateY(16px) rotate(0deg);
+  }
+  .reader.is-open .reader__sheet { transform: translateY(0) rotate(0deg); }
+  .reader__title { font-size: 19px; }
+}
+
+/* --------------------------------------------------------------------------
+   Missing-image state
+   -------------------------------------------------------------------------- */
+
+.missing {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #05070c;
+  z-index: 60;
+  padding: 24px;
+}
+.missing[hidden] { display: none; }
+.missing__card {
+  max-width: 420px;
+  padding: 34px 36px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.missing h1 { font-family: var(--type); font-weight: 700; font-size: 21px; margin: 0 0 14px; }
+.missing p  { margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.missing code {
+  display: inline-block;
+  font-size: 13px;
+  padding: 7px 11px;
+  border-radius: 7px;
+  background: rgba(230, 173, 109, 0.12);
+  color: var(--amber-soft);
+  margin-bottom: 12px;
+}
+.missing__note code { display: inline; padding: 2px 6px; margin: 0; font-size: 12px; }
+
+/* --------------------------------------------------------------------------
+   Tuning mode  (press D)
+   -------------------------------------------------------------------------- */
+
+.tuning .hotspot {
+  outline: 1px dashed rgba(230, 173, 109, 0.75);
+  background: rgba(230, 173, 109, 0.09);
+}
+.tuning .hotspot::after {
+  content: attr(data-id);
+  position: absolute;
+  left: 0; top: -16px;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--amber-soft);
+  white-space: nowrap;
+}
+.tuning .viewport { cursor: crosshair; }
+
+.readout {
+  position: absolute;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%);
+  z-index: 80;
+  padding: 9px 15px;
+  border-radius: 8px;
+  background: rgba(5, 7, 12, 0.9);
+  border: 1px solid var(--hairline);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--amber-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+.readout.is-visible { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   Small screens
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .hint { right: 20px; bottom: 18px; font-size: 10px; }
+  .card { width: 262px; padding: 19px 20px 18px; }
+  .card__title { font-size: 15px; }
+  .card__body { font-size: 12px; line-height: 1.68; }
+  .hotspot__marker,
+  .hotspot__pulse { width: 15px; height: 15px; margin: -7.5px 0 0 -7.5px; }
+}
+
+/* --------------------------------------------------------------------------
+   Touch
+
+   The room fills the height and runs off both sides — you drag along it. Dots
+   are always visible, since there is no cursor to bring them out, and the
+   sheet is pinned across the bottom of the screen rather than hung beside
+   whatever you tapped. Position is solved in JS (see pinCardToViewport).
+   -------------------------------------------------------------------------- */
+
+/* dragging is navigation whenever the room is wider than the window */
+.is-pan .viewport { touch-action: none; cursor: grab; }
+.is-pan.is-dragging .viewport { cursor: grabbing; }
+.is-pan .hotspot__hit { cursor: pointer; }
+
+/* On touch the sheet is centred in the window rather than hung beside the
+   thing you tapped — there is no room to hang it, and the bottom of the screen
+   belongs to the pan arrows. Position is solved in JS (centreCardInViewport). */
+.is-touch .card {
+  max-width: none;
+  padding: 22px 24px 22px;
+  transform: scale(0.97) rotate(-0.4deg);
+  transform-origin: center;
+}
+.is-touch .hotspot.is-open .card { transform: scale(1) rotate(-0.4deg); }
+
+/* no room to run a leader line to something off the top of the screen */
+.is-touch .card::before { content: none; }
+
+.is-touch .hotspot__marker,
+.is-touch .hotspot__pulse { width: 17px; height: 17px; margin: -8.5px 0 0 -8.5px; }
+
+/* centred between the two arrows */
+.is-pan .hint {
+  left: 0; right: 0; bottom: 40px;
+  text-align: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax { transition: none !important; }
+  .hotspot__pulse,
+  .hint__dot,
+  .pan,
+  .grain,
+  .glow { animation: none !important; }
+  .is-ready .stage { transition: none; transform: translate(-50%, -50%) scale(1); }
+  .twinkle { opacity: 0.35 !important; }
+}
