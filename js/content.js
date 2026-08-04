@@ -53,9 +53,7 @@ const HOTSPOTS = [
 
   {
     /* NOTE: this duplicates the two framed photographs on the right-hand wall,
-       which carry the same two products. Delete whichever you don't want.
-       The URL is also given as .app here and .com on the photo — .com is used
-       in both for now. */
+       which carry the same two products. Delete whichever you don't want. */
     id: 'typewriter',
     x: 30.5, y: 57.6, w: 7.0, h: 2.8,
     align: 'right', vAlign: 'down',
@@ -69,7 +67,7 @@ const HOTSPOTS = [
     ],
     links: [
       { label: 'kader.nz', href: 'https://www.kader.nz' },
-      { label: 'mycareercanvas.com', href: 'https://www.mycareercanvas.com' }
+      { label: 'mycareercanvas.app', href: 'https://www.mycareercanvas.app' }
     ]
   },
 
@@ -185,7 +183,7 @@ const HOTSPOTS = [
     align: 'left', vAlign: 'down',
     title: 'Career Canvas',
     body: 'Career planning and positioning.',
-    links: [{ label: 'mycareercanvas.com', href: 'https://www.mycareercanvas.com' }]
+    links: [{ label: 'mycareercanvas.app', href: 'https://www.mycareercanvas.app' }]
   },
 
   {
