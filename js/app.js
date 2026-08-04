@@ -652,9 +652,15 @@
             '<span class="card__cta-label">Read more</span>' + ARROW +
           '</button>'
         : (h.links || []).map(function (l) {
-            return '<a class="card__cta" href="' + esc(l.href) + '">' +
-                     '<span class="card__cta-label">' + esc(l.label) + '</span>' + ARROW +
-                   '</a>';
+            // a link with no href isn't a link — it's a note. Renders as a
+            // muted chip with no arrow and nothing to click.
+            return l.href
+              ? '<a class="card__cta" href="' + esc(l.href) + '">' +
+                  '<span class="card__cta-label">' + esc(l.label) + '</span>' + ARROW +
+                '</a>'
+              : '<span class="card__cta card__cta--soon">' +
+                  '<span class="card__cta-label">' + esc(l.label) + '</span>' +
+                '</span>';
           }).join('');
 
       node.innerHTML =

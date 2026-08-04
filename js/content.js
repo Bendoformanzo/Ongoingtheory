@@ -66,7 +66,8 @@ const HOTSPOTS = [
       'Career Canvas: Career Planning and Positioning'
     ],
     links: [
-      { label: 'kader.nz', href: 'https://www.kader.nz' },
+      // no href yet — Kader isn't live. Add the href back to make it a link.
+      { label: 'Kader — coming soon' },
       { label: 'mycareercanvas.app', href: 'https://www.mycareercanvas.app' }
     ]
   },
@@ -173,7 +174,8 @@ const HOTSPOTS = [
     align: 'left', vAlign: 'down',
     title: 'Kader',
     body: 'Brand and growth architecture.',
-    links: [{ label: 'kader.nz', href: 'https://www.kader.nz' }]
+    // no href yet — see the typewriter card
+    links: [{ label: 'Coming soon' }]
   },
 
   {

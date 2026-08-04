@@ -455,7 +455,16 @@ body { overflow: hidden; }
   text-decoration: none;
   transition: background-color 200ms ease, border-color 200ms ease, transform 200ms var(--ease);
 }
-.card__cta:hover {
+/* a note rather than a link — nothing to click yet */
+.card__cta--soon {
+  border-style: dashed;
+  border-color: rgba(36, 31, 25, 0.28);
+  background: none;
+  color: rgba(36, 31, 25, 0.55);
+  cursor: default;
+}
+
+.card__cta:not(.card__cta--soon):hover {
   background: rgba(36, 31, 25, 0.10);
   border-color: rgba(36, 31, 25, 0.75);
   transform: translateY(-1px);
